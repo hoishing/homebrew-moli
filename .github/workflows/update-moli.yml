@@ -28,10 +28,10 @@ jobs:
           HOMEBREW_NO_INSTALL_FROM_API: "1"
         run: |
           mkdir -p "$(brew --repository)/Library/Taps/hoishing"
-          ln -s "$GITHUB_WORKSPACE" "$(brew --repository)/Library/Taps/hoishing/homebrew-tap"
-          brew style hoishing/tap/moli
-          brew install hoishing/tap/moli
-          brew test hoishing/tap/moli
+          ln -s "$GITHUB_WORKSPACE" "$(brew --repository)/Library/Taps/hoishing/homebrew-moli"
+          brew style hoishing/moli/moli
+          brew install hoishing/moli/moli
+          brew test hoishing/moli/moli
 
       - name: Commit and push
         if: steps.update.outputs.version != ''
