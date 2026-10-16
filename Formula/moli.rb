@@ -1,0 +1,41 @@
+class Moli < Formula
+  desc "Headless browser for AI agents, built in Rust"
+  homepage "https://github.com/lexmount/moli"
+  version "1.1.17"
+  license any_of: ["MIT", "Apache-2.0"]
+
+  livecheck do
+    url :stable
+    strategy :github_latest
+  end
+
+  on_macos do
+    on_arm do
+      url "https://github.com/lexmount/moli/releases/download/v#{version}/moli-aarch64-apple-darwin.tar.gz"
+      sha256 "b3fca284ed60d0d845ae5d0024d6d0f4d30d5cab83b8182d6ef874e531e0fa5e"
+    end
+    on_intel do
+      url "https://github.com/lexmount/moli/releases/download/v#{version}/moli-x86_64-apple-darwin.tar.gz"
+      sha256 "33fb90365a45155fffec33d7acc428054594ace28b712edbaa754159f40cb9bd"
+    end
+  end
+
+  on_linux do
+    on_arm do
+      url "https://github.com/lexmount/moli/releases/download/v#{version}/moli-aarch64-unknown-linux-gnu.tar.gz"
+      sha256 "6cd9e66ef9ea3d96a45bc3a55ccda54f320df02a3ea060bcbd8df254727f6491"
+    end
+    on_intel do
+      url "https://github.com/lexmount/moli/releases/download/v#{version}/moli-x86_64-unknown-linux-gnu.tar.gz"
+      sha256 "e338cdd2ab6e3e6262117e56aba625bf6c71c44fd72ac3870bbd9c0e6c1ec351"
+    end
+  end
+
+  def install
+    bin.install "moli"
+  end
+
+  test do
+    assert_match version.to_s, shell_output("#{bin}/moli --version")
+  end
+end
