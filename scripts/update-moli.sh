@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Sync Formula/moli.rb with the latest lexmount/moli release.
-# Requires: gh (authenticated), jq.
+# Requires: gh (authenticated), jq, curl, shasum.
 set -euo pipefail
 
 formula="$(dirname "$0")/../Formula/moli.rb"
@@ -25,6 +25,16 @@ for target in aarch64-apple-darwin x86_64-apple-darwin aarch64-unknown-linux-gnu
     { print }
   ' "$formula" >"$formula.tmp" && mv "$formula.tmp" "$formula"
 done
+
+# Skills resource: source tarball of the same tag (no API digest, so hash it).
+src_url="https://github.com/lexmount/moli/archive/refs/tags/v$latest.tar.gz"
+src_sha=$(curl -fsSL "$src_url" | shasum -a 256 | cut -d' ' -f1)
+[[ "$src_sha" =~ ^[0-9a-f]{64}$ ]] || { echo "failed to hash $src_url" >&2; exit 1; }
+awk -v u="$src_url" -v s="$src_sha" '
+  /archive\/refs\/tags\/v.*\.tar\.gz/ { sub(/"[^"]+"/, "\"" u "\""); hit = 1; print; next }
+  hit && /sha256 "/ { sub(/"[0-9a-f]+"/, "\"" s "\""); hit = 0 }
+  { print }
+' "$formula" >"$formula.tmp" && mv "$formula.tmp" "$formula"
 rm -f "$formula.bak"
 
 echo "moli updated: $current -> $latest"

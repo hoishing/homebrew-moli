@@ -31,11 +31,28 @@ class Moli < Formula
     end
   end
 
+  # Official agent skills, pinned to the same release tag as the binary.
+  resource "skills" do
+    url "https://github.com/lexmount/moli/archive/refs/tags/v1.1.17.tar.gz"
+    sha256 "37908bb53ef1490c8b4014d39722add47b39f3f4d6ce8b8f8f74f77bc0b86647"
+  end
+
   def install
     bin.install "moli"
+    resource("skills").stage { pkgshare.install "skills" }
+  end
+
+  def caveats
+    <<~EOS
+      Agent skills are installed to:
+        #{opt_pkgshare}/skills
+      Symlink them into your agent skills directory, e.g.:
+        for s in #{opt_pkgshare}/skills/*; do ln -sfn "$s" ~/.agents/skills/; done
+    EOS
   end
 
   test do
     assert_match version.to_s, shell_output("#{bin}/moli --version")
+    assert_path_exists pkgshare/"skills/moli-webfetch/SKILL.md"
   end
 end
