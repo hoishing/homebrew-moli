@@ -1,7 +1,7 @@
 class Moli < Formula
   desc "Headless browser for AI agents, built in Rust"
   homepage "https://github.com/lexmount/moli"
-  version "1.1.18"
+  version "1.1.19"
   license any_of: ["MIT", "Apache-2.0"]
 
   livecheck do
@@ -12,29 +12,29 @@ class Moli < Formula
   on_macos do
     on_arm do
       url "https://github.com/lexmount/moli/releases/download/v#{version}/moli-aarch64-apple-darwin.tar.gz"
-      sha256 "68b2f0d42f018d6c00bf9ab222481b12a8e8ba161050645b9151557c4b6d362f"
+      sha256 "65f389b4e9f71eb9bf2d879984bb1a599d9c09b171513bd2b9af3950e0fb15be"
     end
     on_intel do
       url "https://github.com/lexmount/moli/releases/download/v#{version}/moli-x86_64-apple-darwin.tar.gz"
-      sha256 "c94e46b2c30671e2732410c88ac3aceab02dc590c3b690901d3963e40a08a293"
+      sha256 "553a76b18ebae849cdf9895ce991231b89d0405fd6de7157a92ffa72dd14a48e"
     end
   end
 
   on_linux do
     on_arm do
       url "https://github.com/lexmount/moli/releases/download/v#{version}/moli-aarch64-unknown-linux-gnu.tar.gz"
-      sha256 "ec57982984245811e2e9ea59a7b45693c01c38ccf403bbe2ea2b1b3bebd482fb"
+      sha256 "f3c71ff43d250fdc16fbf74a34f7c0041b47f8ba25bba1cb476bc88db587bfc8"
     end
     on_intel do
       url "https://github.com/lexmount/moli/releases/download/v#{version}/moli-x86_64-unknown-linux-gnu.tar.gz"
-      sha256 "59715fbdb2b016bb9136e1edb59a2a195c0f98459fd06739e17edc62da6a48b1"
+      sha256 "5c22362065e64e6de785274f6b3f28a735fca363abf9896c48733e5f58489def"
     end
   end
 
   # Official agent skills, pinned to the same release tag as the binary.
   resource "skills" do
-    url "https://github.com/lexmount/moli/archive/refs/tags/v1.1.18.tar.gz"
-    sha256 "d150d3ae79b1fc492a39af6832b3a44baeaaacc045384d16a76d5860599c9106"
+    url "https://github.com/lexmount/moli/archive/refs/tags/v1.1.19.tar.gz"
+    sha256 "3e6bbacbf3ce9e9b4634129912bc513ae70c064974c94e0111f068aff2475924"
   end
 
   def install
